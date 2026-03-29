@@ -4,6 +4,7 @@ import { ExpenseForm } from "./components/ExpenseForm.jsx";
 import { ExpenseList } from "./components/ExpenseList.jsx";
 import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Wallet } from "lucide-react";
+import { ChatbotContainer } from '../components/Chatbot/src/ChatbotContainer';
 
 export default function App() {
   const [expenses, setExpenses] = useState([]);
@@ -108,6 +109,10 @@ export default function App() {
 
             {/* Expense List */}
             <ExpenseList expenses={expenses} onDeleteExpense={handleDeleteExpense} />
+
+            <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+              <ChatbotContainer />
+            </div>
           </div>
         </div>
       </div>
