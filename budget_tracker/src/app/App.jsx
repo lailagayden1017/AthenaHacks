@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { useState } from "react";
 // import PieChart from "./components/PieChart";
 // import { ExpenseForm } from "./components/ExpenseForm";
@@ -121,3 +122,26 @@
 //     </div>
 //   );
 // }
+=======
+import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import Form from "./components/Form";
+import Budget from "./components/Budget";
+
+export default function App() {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Form />} />
+        <Route path="/budget" element={<Budget />} />
+      </Routes>
+    </>
+  )
+}
+
+/*
+  <Routes>
+    <Route path="/budget" element={<Budget />} />
+  </Routes>
+*/
+>>>>>>> 31fb510 (start pages and user info)
