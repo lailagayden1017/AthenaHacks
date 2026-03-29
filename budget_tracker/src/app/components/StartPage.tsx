@@ -16,7 +16,7 @@ export default function StartPage({formData, setFormData, nextPage}) {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
       <div className="w-full max-w-md px-8 space-y-8 flex flex-col justify-center items-center">
         <div className="text-center space-y-2">
-          <h1 className="text-5xl font-bold text-slate-900">Welcome</h1>
+          <h1 className="text-5xl font-bold text-slate-900">Welcome to Budget-Buddy</h1>
           <p className="text-lg text-slate-600">Enter your cash flow details to get started</p>
         </div>
         
