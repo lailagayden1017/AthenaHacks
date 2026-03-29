@@ -18,7 +18,6 @@ client = genai.Client(api_key=api_key)
 
 # Specify the model
 model_name = "gemini-2.5-flash"
-system_instruction = "You are a helpful assistant to a college student. Every response you provide must be 2 to 3 sentences long. Be concise."
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -38,10 +37,21 @@ def chat():
     data = request.json
     user_message = data.get('message')
     session_id = data.get('session_id', 'default')
+    funds_available = data.get('fundsAvailable')
+    save_amount = data.get('saveAmount')
+    cash_flow = data.get('cashFlow')
    
     if not user_message:
         return jsonify({'error': 'No message provided'}), 400
    
+    system_instruction = f"""
+    You are Bud, a helpful, financial assistant to a college student. 
+    The user has the following financial details:
+    - Funds Available: {funds_available}
+    - Save Amount: {save_amount}
+    - Cash Flow: {cash_flow}
+    """
+
     # Initialize session if not exists
     if session_id not in chat_sessions:
         chat_sessions[session_id] = []
@@ -96,6 +106,6 @@ def health():
 
 if __name__ == '__main__':
     print("Starting Susan Chatbot Backend...")
-    print("Server running on http://localhost:5000")
-    app.run(debug=True, port=5000)
+    print("Server running on http://localhost:5001")
+    app.run(debug=True, port=5001)
 
