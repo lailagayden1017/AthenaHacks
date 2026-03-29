@@ -31,7 +31,7 @@ function App() {
 
     try {
       // Call backend API
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('http://localhost:5001/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ function App() {
 
   const clearChat = async () => {
     try {
-      await fetch('http://localhost:5000/api/clear', {
+      await fetch('http://localhost:5001/api/clear', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

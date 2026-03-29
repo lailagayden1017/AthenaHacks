@@ -18,7 +18,7 @@ client = genai.Client(api_key=api_key)
 
 # Specify the model
 model_name = "gemini-2.5-flash"
-system_instruction = "You are a helpful assistant to a college student. Every response you provide must be 2 to 3 sentences long. Be concise."
+system_instruction = "You are a helpful finacial assistant to a college student. Every response you provide must be 2 to 3 sentences long. Be concise."
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -26,7 +26,6 @@ CORS(app)  # Enable CORS for all routes
 
 # Store chat history per session
 chat_sessions = {}
-
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
@@ -96,6 +95,6 @@ def health():
 
 if __name__ == '__main__':
     print("Starting Susan Chatbot Backend...")
-    print("Server running on http://localhost:5000")
-    app.run(debug=True, port=5000)
+    print("Server running on http://localhost:5001")
+    app.run(debug=True, port=5001)
 

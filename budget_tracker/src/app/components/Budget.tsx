@@ -20,7 +20,7 @@ interface BudgetProps {
   setFormData?: (data: Record<string, any>) => void;
 }
 
-export default function Budget({ formData, propFormData, setFormData }: BudgetProps) {
+export default function Budget({ formData }: BudgetProps) {
   const location = useLocation();
   const receivedFormData = formData || location.state?.formData;
   
@@ -98,7 +98,7 @@ export default function Budget({ formData, propFormData, setFormData }: BudgetPr
                     />
                   </div>
                 ) : (
-                  <p className="text-2xl font-bold text-green-600">${fundsAvailable.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-green-600">${totalSavings.toFixed(2)}</p>
                 )}
                 <button
                   onClick={() => {
@@ -236,7 +236,7 @@ export default function Budget({ formData, propFormData, setFormData }: BudgetPr
             <ExpenseList expenses={expenses} onDeleteExpense={handleDeleteExpense} />
 
             <div style={{ position: 'fixed', bottom: '20px', right: '20px' }}>
-              <ChatbotContainer />
+              <ChatbotContainer fundsAvailable={totalSavings} formData={receivedFormData} />
             </div>
           </div>
         </div>

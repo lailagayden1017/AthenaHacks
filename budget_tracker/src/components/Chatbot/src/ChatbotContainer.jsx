@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import './App.css'
 
-export function ChatbotContainer() {
+export function ChatbotContainer({ fundsAvailable, formData}) {
   const [chatOpen, setChatOpen] = useState(false)
   const [messages, setMessages] = useState([
     { id: 1, text: 'Hello! My name is Ramen and I am here to answer questions relating to budget!', sender: 'bot' }
@@ -31,14 +31,17 @@ export function ChatbotContainer() {
 
     try {
       // Call backend API
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch('http://localhost:5001/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           message: input,
-          session_id: sessionId
+          session_id: sessionId,
+          funds_available: fundsAvailable,
+          save_amount: formData.saveAmount,
+          cash_flow: formData.cashFlow
         })
       })
 
@@ -77,7 +80,7 @@ export function ChatbotContainer() {
 
   const clearChat = async () => {
     try {
-      await fetch('http://localhost:5000/api/clear', {
+      await fetch('http://localhost:5001/api/clear', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

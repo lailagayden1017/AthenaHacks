@@ -18,6 +18,7 @@ client = genai.Client(api_key=api_key)
 
 # Specify the model
 model_name = "gemini-2.5-flash"
+system_instruction = None
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -37,9 +38,9 @@ def chat():
     data = request.json
     user_message = data.get('message')
     session_id = data.get('session_id', 'default')
-    funds_available = data.get('fundsAvailable')
-    save_amount = data.get('saveAmount')
-    cash_flow = data.get('cashFlow')
+    funds_available = data.get('funds_available')
+    save_amount = data.get('save_amount')
+    cash_flow = data.get('cash_flow')
    
     if not user_message:
         return jsonify({'error': 'No message provided'}), 400
