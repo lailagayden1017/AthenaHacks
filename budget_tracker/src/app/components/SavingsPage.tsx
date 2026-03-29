@@ -6,7 +6,6 @@ import { Label } from "./ui/label";
 export default function SavingsPage({formData, setFormData, prevPage, nextPage}) {
   const handleSaveAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Only allow numerical characters (0-9, optional decimal point)
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
       setFormData({ ...formData, saveAmount: value });
     }
@@ -19,39 +18,8 @@ export default function SavingsPage({formData, setFormData, prevPage, nextPage})
           <h1 className="text-5xl font-bold text-slate-900">Savings Goal</h1>
           <p className="text-lg text-slate-600">Set up your savings preferences</p>
         </div>
-        
-        <div className="space-y-6">
-          {/* Frequency Selection */}
-          <div className="space-y-3">
-            <Label className="text-lg">Savings Frequency</Label>
-            <div className="grid grid-cols-3 gap-3">
-              <Button
-                type="button"
-                variant={formData.frequency === "weekly" ? "default" : "outline"}
-                onClick={() => setFormData({ ...formData, frequency: "weekly" })}
-                className="h-12"
-              >
-                Weekly
-              </Button>
-              <Button
-                type="button"
-                variant={formData.frequency === "monthly" ? "default" : "outline"}
-                onClick={() => setFormData({ ...formData, frequency: "monthly" })}
-                className="h-12"
-              >
-                Monthly
-              </Button>
-              <Button
-                type="button"
-                variant={formData.frequency === "semesterly" ? "default" : "outline"}
-                onClick={() => setFormData({ ...formData, frequency: "semesterly" })}
-                className="h-12"
-              >
-                Semesterly
-              </Button>
-            </div>
-          </div>
 
+        <div className="space-y-6 w-full">
           {/* Save Type Selection */}
           <div className="space-y-3">
             <Label className="text-lg">Save By</Label>
@@ -89,8 +57,8 @@ export default function SavingsPage({formData, setFormData, prevPage, nextPage})
               className="w-full h-12 text-lg"
             />
           </div>
-          
-          <Button 
+
+          <Button
             onClick={prevPage}
             className="w-full"
             size="lg"
@@ -98,9 +66,9 @@ export default function SavingsPage({formData, setFormData, prevPage, nextPage})
             Back
           </Button>
 
-          <Button 
-            type="submit"
-              onClick={nextPage}
+          <Button
+            type="button"
+            onClick={nextPage}
             className="w-full"
             size="lg"
           >
