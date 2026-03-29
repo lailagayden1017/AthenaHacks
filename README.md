@@ -1,4 +1,6 @@
 # AthenaHacks
+- We used Figma Debug for understand how to connect frontend to backend for React and MongoDB
+- We used Claude and Github Copilot for debugging chatbot, and connecting to front end 
 # AthenaHacks Chatbot Setup Guide
 
 ## Prerequisites
