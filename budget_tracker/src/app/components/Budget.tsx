@@ -1,11 +1,10 @@
-<<<<<<< HEAD:budget_tracker/src/app/App.tsx
 import React, { useState } from "react";
-import PieChart from "./components/PieChart.jsx";
-import { ExpenseForm } from "./components/ExpenseForm.jsx";
-import { ExpenseList } from "./components/ExpenseList.jsx";
-import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import PieChart from "./PieChart";
+import { ExpenseForm } from "./ExpenseForm";
+import { ExpenseList } from "./ExpenseList";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Wallet, ChevronRight, ChevronLeft } from "lucide-react";
-import { ChatbotContainer } from '../components/Chatbot/src/ChatbotContainer';
+import { ChatbotContainer } from '../../components/Chatbot/src/ChatbotContainer';
 
 interface Expense {
   id: string;
@@ -14,38 +13,32 @@ interface Expense {
   description?: string;
 }
 
-export default function App() {
+interface BudgetProps {
+  formData?: Record<string, any>;
+  setFormData?: (data: Record<string, any>) => void;
+}
+
+export default function Budget({ formData, setFormData }: BudgetProps) {
   const [expenses, setExpenses] = useState<Expense[]>([]);
-  const [showSavingsView, setShowSavingsView] = useState(false);
-  const [biWeeklyIncome, setBiWeeklyIncome] = useState(500);
-  const [isEditingStats, setIsEditingStats] = useState(false);
-  const [fundsAvailable, setFundsAvailable] = useState(2000);
-  const [savingsAmount, setSavingsAmount] = useState(500);
-  const [editFounds, setEditFunds] = useState(fundsAvailable);
-  const [editSavings, setEditSavings] = useState(savingsAmount);
-  const [isEditingFunds, setIsEditingFunds] = useState(false);
-=======
-import { useState } from "react";
-import PieChart from "./PieChart";
-import { ExpenseForm } from "./ExpenseForm";
-import { ExpenseList } from "./ExpenseList";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Wallet } from "lucide-react";
+  const [showSavingsView, setShowSavingsView] = useState<boolean>(false);
+  const [biWeeklyIncome, setBiWeeklyIncome] = useState<number>(500);
+  const [isEditingStats, setIsEditingStats] = useState<boolean>(false);
+  const [fundsAvailable, setFundsAvailable] = useState<number>(2000);
+  const [savingsAmount, setSavingsAmount] = useState<number>(500);
+  const [editFounds, setEditFunds] = useState<number>(fundsAvailable);
+  const [editSavings, setEditSavings] = useState<number>(savingsAmount);
+  const [isEditingFunds, setIsEditingFunds] = useState<boolean>(false);
 
-export default function Budget(formData, setFormData) {
-  const [expenses, setExpenses] = useState([]);
->>>>>>> 31fb510 (start pages and user info):budget_tracker/src/app/components/Budget.jsx
-
-  const handleAddExpense = (expense: Expense) => {
+  const handleAddExpense = (expense: Expense): void => {
     setExpenses([expense, ...expenses]);
   };
 
-  const handleDeleteExpense = (id: string) => {
+  const handleDeleteExpense = (id: string): void => {
     setExpenses(expenses.filter(expense => expense.id !== id));
   };
 
   // Calculate totals by category
-  const totals = expenses.reduce(
+  const totals = expenses.reduce<Record<string, number>>(
     (acc, expense) => {
       acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
       return acc;
@@ -53,8 +46,8 @@ export default function Budget(formData, setFormData) {
     { food: 0, laundry: 0, transportation: 0, entertainment: 0 }
   );
 
-  const grandTotal = Object.values(totals).reduce((sum, val) => sum + val, 0);
-  const totalSavings = fundsAvailable - grandTotal;
+  const grandTotal: number = Object.values(totals).reduce((sum, val) => sum + val, 0);
+  const totalSavings: number = fundsAvailable - grandTotal;
 
   return (
     <div className="min-h-screen bg-background">
@@ -122,7 +115,7 @@ export default function Budget(formData, setFormData) {
                     />
                   </div>
                 ) : (
-                  <p className="text-2xl font-bold text-green-600">${savingsAmount.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-green-600">${(formData?.saveAmount ? parseFloat(formData.saveAmount) : savingsAmount).toFixed(2)}</p>
                 )}
                 <button
                   onClick={() => {

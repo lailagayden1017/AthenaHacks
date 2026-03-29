@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+//<<<<<<< HEAD
 // import React, { useState } from "react";
 // import PieChart from "./components/PieChart";
 // import { ExpenseForm } from "./components/ExpenseForm";
@@ -122,7 +122,7 @@
 //     </div>
 //   );
 // }
-=======
+
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Form from "./components/Form";
@@ -144,4 +144,4 @@ export default function App() {
     <Route path="/budget" element={<Budget />} />
   </Routes>
 */
->>>>>>> 31fb510 (start pages and user info)
+//>>>>>>> 31fb510 (start pages and user info)
