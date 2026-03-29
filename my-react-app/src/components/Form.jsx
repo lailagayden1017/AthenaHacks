@@ -1,6 +1,6 @@
 import { useState } from "react";
-import FormPage1 from './FormPage1'
-import FormPage2 from './FormPage2'
+import Income from './Income'
+import Expenses from './Expenses'
 
 function Form() {
     const [page, setPage] = useState(1);
@@ -20,10 +20,10 @@ function Form() {
             <h1>Budgeting Form</h1>
             <form onSubmit={handleSubmit}>
                 {page === 1 && (
-                    <FormPage1 formData={formData} setFormData={setFormData} nextPage={nextPage} />
+                    <Income formData={formData} setFormData={setFormData} nextPage={nextPage} />
                 )}
                 {page === 2 && (
-                    <FormPage2 formData={formData} setFormData={setFormData} prevPage={prevPage} />
+                    <Expenses formData={formData} setFormData={setFormData} prevPage={prevPage} />
                 )}
             </form>
         </>
