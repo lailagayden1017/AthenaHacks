@@ -7,7 +7,6 @@ export default function StartPage({formData, setFormData, nextPage}) {
 
   const handleCashFlowChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Only allow numerical characters (0-9, optional decimal point)
     if (value === '' || /^\d*\.?\d*$/.test(value)) {
       setFormData({ ...formData, cashFlow: value });
     }
@@ -21,9 +20,36 @@ export default function StartPage({formData, setFormData, nextPage}) {
           <p className="text-lg text-slate-600">Enter your cash flow details to get started</p>
         </div>
         
-        <div className="space-y-4">
+        <div className="space-y-6 w-full">
+
+          {/* Frequency Selection */}
+          <div className="space-y-3">
+            <Label className="text-lg">Cash Flow Frequency</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                type="button"
+                variant={formData.cashFlowFrequency === "weekly" ? "default" : "outline"}
+                onClick={() => setFormData({ ...formData, cashFlowFrequency: "weekly" })}
+                className="h-12"
+              >
+                Weekly
+              </Button>
+              <Button
+                type="button"
+                variant={formData.cashFlowFrequency === "monthly" ? "default" : "outline"}
+                onClick={() => setFormData({ ...formData, cashFlowFrequency: "monthly" })}
+                className="h-12"
+              >
+                Monthly
+              </Button>
+            </div>
+          </div>
+
+          {/* Cash Flow Amount */}
           <div className="space-y-2">
-            <Label htmlFor="cashflow" className="text-lg">Cash Flow</Label>
+            <Label htmlFor="cashflow" className="text-lg">
+              Cash Flow Amount {formData.cashFlowFrequency ? `(${formData.cashFlowFrequency})` : ""}
+            </Label>
             <Input
               id="cashflow"
               type="number"
