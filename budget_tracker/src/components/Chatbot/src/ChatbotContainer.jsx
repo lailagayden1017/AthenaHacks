@@ -4,7 +4,7 @@ import './App.css'
 export function ChatbotContainer() {
   const [chatOpen, setChatOpen] = useState(false)
   const [messages, setMessages] = useState([
-    { id: 1, text: 'Hello! My name is Ramen and I am here to answer questions relating to budget!', sender: 'bot' }
+    { id: 1, text: 'Hello! My name is Bud and I am here to answer questions relating to budget!', sender: 'bot' }
   ])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
@@ -87,7 +87,7 @@ export function ChatbotContainer() {
         })
       })
       setMessages([
-        { id: 1, text: 'Hello! My name is Ramen and I am here to answer questions relating to budget!', sender: 'bot' }
+        { id: 1, text: 'Hello! My name is Bud and I am here to answer questions relating to budget!', sender: 'bot' }
       ])
     } catch (error) {
       console.error('Error clearing chat:', error)
@@ -102,14 +102,14 @@ export function ChatbotContainer() {
         onClick={() => setChatOpen(!chatOpen)}
         aria-label="Open chat"
       >
-        🍜
+        🤖
       </button>
 
       {/* Chat Popup */}
       {chatOpen && (
         <div className="chat-popup">
           <div className="chat-header">
-            <h3>Chat with Ramen</h3>
+            <h3>Chat with Bud</h3>
             <div className="chat-header-buttons">
               <button
                 className="chat-clear"
