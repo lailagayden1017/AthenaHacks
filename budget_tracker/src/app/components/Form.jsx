@@ -17,19 +17,15 @@ export default function Form() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    const handleSubmit = () => {
         console.log("form data:", JSON.stringify(formData));
-        navigate("/budget");
+        navigate("/budget", { state: { formData } });
     };
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                {page === 1 && <StartPage formData={formData} setFormData={setFormData} nextPage={nextPage} />}
-                {page === 2 && <SavingsPage formData={formData} setFormData={setFormData} prevPage={prevPage} />}
-            </form>
+            {page === 1 && <StartPage formData={formData} setFormData={setFormData} nextPage={nextPage} />}
+            {page === 2 && <SavingsPage formData={formData} setFormData={setFormData} prevPage={prevPage} nextPage={handleSubmit} />}
         </>
-    )
-
+    );
 }

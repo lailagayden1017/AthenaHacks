@@ -5,6 +5,8 @@ import { ExpenseList } from "./ExpenseList";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Wallet, ChevronRight, ChevronLeft } from "lucide-react";
 import { ChatbotContainer } from '../../components/Chatbot/src/ChatbotContainer';
+import { useLocation } from "react-router-dom";
+
 
 interface Expense {
   id: string;
@@ -18,16 +20,29 @@ interface BudgetProps {
   setFormData?: (data: Record<string, any>) => void;
 }
 
-export default function Budget({ formData, setFormData }: BudgetProps) {
+export default function Budget({ formData, propFormData, setFormData }: BudgetProps) {
+  const location = useLocation();
+  const receivedFormData = formData || location.state?.formData;
+  
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [showSavingsView, setShowSavingsView] = useState<boolean>(false);
   const [biWeeklyIncome, setBiWeeklyIncome] = useState<number>(500);
   const [isEditingStats, setIsEditingStats] = useState<boolean>(false);
-  const [fundsAvailable, setFundsAvailable] = useState<number>(2000);
-  const [savingsAmount, setSavingsAmount] = useState<number>(500);
-  const [editFounds, setEditFunds] = useState<number>(fundsAvailable);
-  const [editSavings, setEditSavings] = useState<number>(savingsAmount);
   const [isEditingFunds, setIsEditingFunds] = useState<boolean>(false);
+  
+  const [fundsAvailable, setFundsAvailable] = useState<number>(
+    receivedFormData?.cashFlow ? parseFloat(receivedFormData.cashFlow) : 0
+  );
+  const [savingsAmount, setSavingsAmount] = useState<number>(
+    receivedFormData?.saveAmount ? parseFloat(receivedFormData.saveAmount) : 0
+  );
+  const [editFounds, setEditFunds] = useState<number>(
+    receivedFormData?.cashFlow ? parseFloat(receivedFormData.cashFlow) : 0
+  );
+  const [editSavings, setEditSavings] = useState<number>(
+    receivedFormData?.saveAmount ? parseFloat(receivedFormData.saveAmount) : 0
+  );
+
 
   const handleAddExpense = (expense: Expense): void => {
     setExpenses([expense, ...expenses]);
@@ -83,7 +98,7 @@ export default function Budget({ formData, setFormData }: BudgetProps) {
                     />
                   </div>
                 ) : (
-                  <p className="text-2xl font-bold">${fundsAvailable.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-green-600">${fundsAvailable.toFixed(2)}</p>
                 )}
                 <button
                   onClick={() => {
@@ -115,7 +130,7 @@ export default function Budget({ formData, setFormData }: BudgetProps) {
                     />
                   </div>
                 ) : (
-                  <p className="text-2xl font-bold text-green-600">${(formData?.saveAmount ? parseFloat(formData.saveAmount) : savingsAmount).toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-green-600">${savingsAmount.toFixed(2)}</p>
                 )}
                 <button
                   onClick={() => {
@@ -199,7 +214,8 @@ export default function Budget({ formData, setFormData }: BudgetProps) {
                   {showSavingsView ? (
                       <PieChart 
                         spending={grandTotal}
-                        savings={grandTotal === 0 ? fundsAvailable : totalSavings}
+                        //savings={grandTotal === 0 ? fundsAvailable : totalSavings}
+                        savings={Math.max(savingsAmount - grandTotal, 0)}
                         isSavingsView={true} 
                       />
                   ) : (
