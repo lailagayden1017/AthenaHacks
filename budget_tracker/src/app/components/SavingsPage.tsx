@@ -3,7 +3,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 
-export default function SavingsPage({formData, setFormData, prevPage}) {
+export default function SavingsPage({formData, setFormData, prevPage, nextPage}) {
   const handleSaveAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Only allow numerical characters (0-9, optional decimal point)
@@ -100,6 +100,7 @@ export default function SavingsPage({formData, setFormData, prevPage}) {
 
           <Button 
             type="submit"
+              onClick={nextPage}
             className="w-full"
             size="lg"
           >
