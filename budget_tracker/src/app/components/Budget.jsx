@@ -1,3 +1,4 @@
+<<<<<<< HEAD:budget_tracker/src/app/App.tsx
 import React, { useState } from "react";
 import PieChart from "./components/PieChart.jsx";
 import { ExpenseForm } from "./components/ExpenseForm.jsx";
@@ -23,6 +24,17 @@ export default function App() {
   const [editFounds, setEditFunds] = useState(fundsAvailable);
   const [editSavings, setEditSavings] = useState(savingsAmount);
   const [isEditingFunds, setIsEditingFunds] = useState(false);
+=======
+import { useState } from "react";
+import PieChart from "./PieChart";
+import { ExpenseForm } from "./ExpenseForm";
+import { ExpenseList } from "./ExpenseList";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Wallet } from "lucide-react";
+
+export default function Budget(formData, setFormData) {
+  const [expenses, setExpenses] = useState([]);
+>>>>>>> 31fb510 (start pages and user info):budget_tracker/src/app/components/Budget.jsx
 
   const handleAddExpense = (expense: Expense) => {
     setExpenses([expense, ...expenses]);
