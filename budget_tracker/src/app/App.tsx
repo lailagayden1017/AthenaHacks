@@ -6,8 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
 import { Wallet, ChevronRight, ChevronLeft } from "lucide-react";
 import { ChatbotContainer } from '../components/Chatbot/src/ChatbotContainer';
 
+interface Expense {
+  id: string;
+  category: string;
+  amount: number;
+  description?: string;
+}
+
 export default function App() {
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [showSavingsView, setShowSavingsView] = useState(false);
   const [biWeeklyIncome, setBiWeeklyIncome] = useState(500);
   const [isEditingStats, setIsEditingStats] = useState(false);
@@ -17,11 +24,11 @@ export default function App() {
   const [editSavings, setEditSavings] = useState(savingsAmount);
   const [isEditingFunds, setIsEditingFunds] = useState(false);
 
-  const handleAddExpense = (expense) => {
+  const handleAddExpense = (expense: Expense) => {
     setExpenses([expense, ...expenses]);
   };
 
-  const handleDeleteExpense = (id) => {
+  const handleDeleteExpense = (id: string) => {
     setExpenses(expenses.filter(expense => expense.id !== id));
   };
 
@@ -55,11 +62,11 @@ export default function App() {
 
           {/* Right side - Funds Available & Savings Amount */}
           <div className="flex gap-4">
-            <Card className="w-48">
+            <Card className="w-48 ">
               <CardHeader className="pb-3">
                 <CardTitle className="text-sm font-medium">Funds Available</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-3 pb-1">
                 {isEditingFunds ? (
                   <div className="flex items-center gap-2">
                     <span className="text-sm">$</span>
@@ -165,40 +172,42 @@ export default function App() {
             {/* Graph Box with Toggle Arrow */}
             <Card className="relative overflow-hidden">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>
-                  {showSavingsView ? "Spending vs Savings" : "Spending Distribution"}
-                </CardTitle>
-                <button 
-                  onClick={() => setShowSavingsView(!showSavingsView)}
-                  className="p-2 hover:bg-accent rounded-full transition-colors"
-                >
-                  {showSavingsView ? <ChevronLeft /> : <ChevronRight />}
-                </button>
-              </CardHeader>
-              <CardContent className="flex justify-center min-h-[300px] items-center">
-                {showSavingsView ? (
-                  fundsAvailable > 0 ? (
-                    <PieChart 
-                      spending={grandTotal}
-                      savings={totalSavings}
-                      isSavingsView={true} 
-                    />
+                    <div>
+                      <CardTitle>
+                        {showSavingsView ? "Spending vs Savings" : "Spending Distribution"}
+                      </CardTitle>
+                      {!showSavingsView && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Available Funds: <span className="text-primary font-semibold">${(fundsAvailable - grandTotal).toFixed(2)}</span>
+                        </p>
+                      )}
+                    </div>
+                    <button 
+                      onClick={() => setShowSavingsView(!showSavingsView)}
+                      className="p-2 hover:bg-accent rounded-full transition-colors"
+                    >
+                      {showSavingsView ? <ChevronLeft /> : <ChevronRight />}
+                    </button>
+                  </CardHeader>
+                <CardContent className="flex flex-col items-center gap-6">
+                <div className="flex justify-center min-h-[300px] items-center">
+                  {showSavingsView ? (
+                      <PieChart 
+                        spending={grandTotal}
+                        savings={grandTotal === 0 ? fundsAvailable : totalSavings}
+                        isSavingsView={true} 
+                      />
                   ) : (
-                    <p className="text-muted-foreground">Set your funds available</p>
-                  )
-                ) : (
-                  grandTotal > 0 ? (
-                    <PieChart
-                      food={totals.food}
-                      laundry={totals.laundry}
-                      transportation={totals.transportation}
-                      entertainment={totals.entertainment}
-                      total={grandTotal}
-                    />
-                  ) : (
-                    <p className="text-muted-foreground">Add expenses to see data</p>
-                  )
-                )}
+                      <PieChart
+                        food={totals.food}
+                        laundry={totals.laundry}
+                        transportation={totals.transportation}
+                        entertainment={totals.entertainment}
+                        total={grandTotal}
+                        fundsAvailable={fundsAvailable}
+                      />
+                  )}
+                </div>
               </CardContent>
             </Card>
 
