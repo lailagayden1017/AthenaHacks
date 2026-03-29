@@ -13,6 +13,7 @@ interface Expense {
   category: string;
   amount: number;
   description?: string;
+  date: string;
 }
 
 interface BudgetProps {
@@ -27,6 +28,23 @@ export default function Budget({ formData }: BudgetProps) {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [showSavingsView, setShowSavingsView] = useState<boolean>(false);
   const [biWeeklyIncome, setBiWeeklyIncome] = useState<number>(500);
+  // useEffect(() => {
+  //   fetch("http://127.0.0.1:5050/expenses")
+  //     .then((res) => {
+  //       if (!res.ok) {
+  //         throw new Error(`Failed to fetch expenses: ${res.status}`);
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("fetched expenses:", data);
+  //       setExpenses(Array.isArray(data) ? data : []);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error fetching expenses:", err);
+  //       setExpenses([]);
+  //     });
+  // }, []);
   const [isEditingStats, setIsEditingStats] = useState<boolean>(false);
   const [isEditingFunds, setIsEditingFunds] = useState<boolean>(false);
   
@@ -44,8 +62,33 @@ export default function Budget({ formData }: BudgetProps) {
   );
 
 
-  const handleAddExpense = (expense: Expense): void => {
-    setExpenses([expense, ...expenses]);
+  const handleAddExpense = async (expense: Expense) => {
+    console.log("App handleAddExpense fired", expense);
+  
+    try {
+      const res = await fetch("http://127.0.0.1:5050/expenses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          description: expense.description,
+          amount: expense.amount,
+          category: expense.category,
+        })
+      });
+  
+      const savedExpense = await res.json();
+  
+      if (!res.ok) {
+        console.error(savedExpense);
+        return;
+      }
+  
+      setExpenses((prev) => [savedExpense, ...prev]);
+    } catch (err) {
+      console.error("Error saving expense:", err);
+    }
   };
 
   const handleDeleteExpense = (id: string): void => {
